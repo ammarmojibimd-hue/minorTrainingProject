@@ -1,5 +1,7 @@
 'use client';
 import { useState, useEffect, useMemo, useCallback } from 'react';
+import Link from 'next/link';
+import { useAuth, API_URL } from './context/AuthContext';
 
 // 12 PROPERTIES WITH OWNER DETAILS
 const INITIAL_PROPERTIES = [
@@ -217,7 +219,9 @@ const INITIAL_TENANT_LEASES = [
   }
 ];
 
-export default function Home() {
+  export default function Home() {
+  const { user, logout } = useAuth();   // <-- ye add karo
+  
   const [activeTab, setActiveTab] = useState('browse');
   const [search, setSearch] = useState('');
   const [countryInfo, setCountryInfo] = useState(null);
@@ -255,8 +259,27 @@ export default function Home() {
           });
         }
       })
-      .catch(err => console.error('Country API fetch error:', err));
+      .catch(() => {});
   }, []);
+
+  useEffect(() => {
+  fetch(`${API_URL}/api/listings`)
+    .then(res => res.json())
+    .then(data => {
+      if (Array.isArray(data)) {
+        const fromDB = data.map(p => ({
+          ...p,
+          id: p._id,                      // aapka code p.id use karta hai
+          description: p.description || '',
+          amenities: p.amenities || [],
+          rating: p.rating || 4.5,
+          applied: false,
+        }));
+        setProperties([...fromDB, ...INITIAL_PROPERTIES]);
+      }
+    })
+    .catch(err => console.error('Listings fetch error:', err));
+}, []);
 
   const filteredProperties = useMemo(() => {
     const query = search.trim().toLowerCase();
@@ -341,6 +364,9 @@ export default function Home() {
           <button style={activeTab === 'owner' ? styles.activeNavBtn : styles.navBtn} onClick={() => setActiveTab('owner')}>
             Owner Dashboard {applications.length > 0 && <span style={styles.badge}>{applications.length}</span>}
           </button>
+        </div>
+        <div style={styles.navLinks}>
+          {user ? <><span>{user.name}</span><button style={styles.navBtn} onClick={logout}>Logout</button><Link href="/add-listing" style={{ color: '#fff' }}>Add Listing</Link></> : <Link href="/login" style={{ color: '#fff' }}>Login / Sign Up</Link>}
         </div>
       </nav>
 
@@ -475,6 +501,7 @@ export default function Home() {
           </div>
         )}
       </main>
+
 
       {/* TENANT LEASE PAYMENT HISTORY MODAL */}
       {selectedLease && (
