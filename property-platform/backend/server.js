@@ -9,8 +9,22 @@ dotenv.config();
 connectDB();
 
 const app = express();
+
 app.use(cors());
 app.use(express.json());
+
+// naye auth aur listing routes (app ke baad hi aane chahiye)
+app.use("/api/auth", require("./routes/auth"));
+app.use("/api/listings", require("./routes/listings"));
+
+// ...yahan se niche aapke purane routes (/api/properties, /api/applications etc.) waise hi rahenge
+
+// dotenv.config();
+// connectDB();
+
+// const app = express();
+// app.use(cors());
+// app.use(express.json());
 
 app.get('/', (req, res) => {
   res.send('Backend API is running...');

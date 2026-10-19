@@ -353,38 +353,39 @@ const INITIAL_TENANT_LEASES = [
   return (
     <div style={styles.container}>
       {/* NAVBAR */}
-      <nav style={styles.navbar}>
+      <nav className="site-navbar" style={styles.navbar}>
         <div style={styles.logo}>
           🏢 UrbanHaven 
           {countryInfo && <span style={{fontSize: '14px', fontWeight: 'normal', marginLeft: '10px'}}>{countryInfo.flag} {countryInfo.name}</span>}
         </div>
-        <div style={styles.navLinks}>
+        <div className="site-nav-tabs" style={styles.navLinks}>
           <button style={activeTab === 'browse' ? styles.activeNavBtn : styles.navBtn} onClick={() => setActiveTab('browse')}>Browse Properties</button>
           <button style={activeTab === 'tenant' ? styles.activeNavBtn : styles.navBtn} onClick={() => setActiveTab('tenant')}>Tenant Dashboard</button>
           <button style={activeTab === 'owner' ? styles.activeNavBtn : styles.navBtn} onClick={() => setActiveTab('owner')}>
             Owner Dashboard {applications.length > 0 && <span style={styles.badge}>{applications.length}</span>}
           </button>
         </div>
-        <div style={styles.navLinks}>
+        <div className="site-nav-account" style={styles.navLinks}>
           {user ? <><span>{user.name}</span><button style={styles.navBtn} onClick={logout}>Logout</button><Link href="/add-listing" style={{ color: '#fff' }}>Add Listing</Link></> : <Link href="/login" style={{ color: '#fff' }}>Login / Sign Up</Link>}
         </div>
       </nav>
 
       {/* SEARCH BAR */}
       {activeTab === 'browse' && (
-        <div style={styles.searchContainer}>
+        <div className="search-container" style={styles.searchContainer}>
           <input
             type="text"
             placeholder="🔍 Search city, title or owner name..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
+            className="search-input"
             style={styles.searchInput}
           />
         </div>
       )}
 
       {/* MAIN CONTENT */}
-      <main style={styles.main}>
+      <main className="page-main" style={styles.main}>
         {activeTab === 'browse' && (
           <div>
             <h1 style={styles.heading}>Explore Properties in India</h1>
@@ -398,7 +399,7 @@ const INITIAL_TENANT_LEASES = [
                 <p>Try searching for <strong>Mumbai</strong>, <strong>Bengaluru</strong>, <strong>Delhi</strong>, <strong>Goa</strong> or clear search.</p>
               </div>
             ) : (
-              <div style={styles.grid}>
+              <div className="property-grid" style={styles.grid}>
                 {filteredProperties.map((prop) => (
                   <div key={prop.id} style={styles.card}>
                     <img src={prop.image} alt={prop.title} style={styles.cardImage} loading="lazy" />
@@ -435,7 +436,7 @@ const INITIAL_TENANT_LEASES = [
         {activeTab === 'tenant' && (
           <div>
             <h2 style={{fontSize: '22px', color: '#1e293b', marginBottom: '15px'}}>My Rented Properties ({tenantLeases.length})</h2>
-            <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(360px, 1fr))', gap: '20px'}}>
+            <div className="tenant-grid" style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(360px, 1fr))', gap: '20px'}}>
               {tenantLeases.map((lease) => (
                 <div key={lease.id} style={styles.tenantCard}>
                   <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start'}}>
@@ -505,8 +506,8 @@ const INITIAL_TENANT_LEASES = [
 
       {/* TENANT LEASE PAYMENT HISTORY MODAL */}
       {selectedLease && (
-        <div style={styles.modalOverlay} onClick={() => setSelectedLease(null)}>
-          <div style={styles.modalBody} onClick={(e) => e.stopPropagation()}>
+        <div className="modalOverlay" style={styles.modalOverlay} onClick={() => setSelectedLease(null)}>
+          <div className="modalBody" style={styles.modalBody} onClick={(e) => e.stopPropagation()}>
             <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
               <h3 style={{margin: 0, fontSize: '18px'}}>{selectedLease.propertyTitle}</h3>
               <span style={selectedLease.currentStatus === 'Paid' ? styles.statusPaidBadge : styles.statusDueBadge}>
@@ -559,8 +560,8 @@ const INITIAL_TENANT_LEASES = [
 
       {/* VIEW DETAILS MODAL */}
       {selectedProperty && (
-        <div style={styles.modalOverlay} onClick={() => setSelectedProperty(null)}>
-          <div style={styles.modalBody} onClick={(e) => e.stopPropagation()}>
+        <div className="modalOverlay" style={styles.modalOverlay} onClick={() => setSelectedProperty(null)}>
+          <div className="modalBody" style={styles.modalBody} onClick={(e) => e.stopPropagation()}>
             <img src={selectedProperty.image} alt={selectedProperty.title} style={styles.modalImg} />
             <h2>{selectedProperty.title}</h2>
             <p style={{color: '#4f46e5', fontWeight: 'bold', margin: '5px 0'}}>📍 {selectedProperty.location} • ₹{selectedProperty.price.toLocaleString('en-IN')}/month</p>
@@ -587,8 +588,8 @@ const INITIAL_TENANT_LEASES = [
 
       {/* EDIT PROPERTY MODAL */}
       {editingProperty && (
-        <div style={styles.modalOverlay} onClick={() => setEditingProperty(null)}>
-          <div style={styles.modalBody} onClick={(e) => e.stopPropagation()}>
+        <div className="modalOverlay" style={styles.modalOverlay} onClick={() => setEditingProperty(null)}>
+          <div className="modalBody" style={styles.modalBody} onClick={(e) => e.stopPropagation()}>
             <h2>Edit Property Details</h2>
             <form onSubmit={handleSaveEdit} style={{display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '15px'}}>
               <div>

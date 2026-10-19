@@ -29,8 +29,8 @@ export default function LoginPage() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#f8fafc" }}>
-      <form onSubmit={submit} style={{ background: "#fff", padding: 32, borderRadius: 12, width: 380, boxShadow: "0 4px 20px rgba(0,0,0,0.08)" }}>
+    <div className="auth-page" style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#f8fafc" }}>
+      <form className="auth-form" onSubmit={submit} style={{ background: "#e6f0ff", padding: 32, borderRadius: 12, width: 380, boxShadow: "0 4px 20px rgba(0,0,0,0.08)" }}>
         <h2 style={{ margin: 0 }}>🏢 UrbanHaven</h2>
         <p style={{ color: "#64748b", fontSize: 14, margin: "4px 0 20px" }}>
           {isSignup ? "Naya account banayein" : "Apne account me login karein"}

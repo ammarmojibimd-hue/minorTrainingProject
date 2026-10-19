@@ -41,7 +41,7 @@ export default function AddListingPage() {
   };
 
   return (
-    <div style={{ maxWidth: 500, margin: "40px auto", padding: 28, background: "#fff", borderRadius: 12, boxShadow: "0 4px 20px rgba(0,0,0,0.08)" }}>
+    <div className="listing-form-card" style={{ maxWidth: 500, margin: "40px auto", padding: 28, background: "#e6f0ff", borderRadius: 12, boxShadow: "0 4px 20px rgba(0,0,0,0.08)" }}>
       <h2 style={{ marginTop: 0 }}>Add New Listing</h2>
       <form onSubmit={submit}>
         <input name="title" placeholder="Property title" onChange={change} required style={inp} />
